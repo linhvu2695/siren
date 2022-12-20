@@ -1,0 +1,6 @@
+exit
+db.fs.files.find({"_id":ObjectId("63a10e1df9b07787c4409a68")})
+db.fs.files.find()
+show collections;
+use mp3s;
+show databases;
