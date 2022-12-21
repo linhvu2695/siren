@@ -3,7 +3,7 @@
 ## Architecture
 
 ### 1. Auth
-- `mysql -uroot < init.sql` init MySQL database and create server authentication
+- `mysql -uroot < init.sql` init MySQL database and create server authentication. Username & password is declared here.
 - `docker build -t siren-auth .` build Docker image 
 - `kubectl apply -f ./manifests` deploy auth microservice
 
@@ -36,7 +36,7 @@
 - `kubectl apply -f notification/manifests` deploy converter microservice
 
 ## Usage
-- `curl -X POST http://mp3converter.com/login -u linhvu2695@gmail.com:password` get token
+- `curl -X POST http://mp3converter.com/login -u <user_email>:<password>` get token
 - `curl -X POST http://mp3converter.com/upload -F "file=@./test.mp4" -H 'Auhtorization: Bearer <token>'` upload file
 - An email will be sent to your username email with mp3_fid
 - `curl -X GET "http://mp3converter.com/download?fid=<mp3_fid>" --output test.mp3 -H 'Authorization: Bearer` download file
