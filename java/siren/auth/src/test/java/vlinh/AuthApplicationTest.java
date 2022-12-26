@@ -60,9 +60,20 @@ public class AuthApplicationTest {
     }
 
     @Test
-    void testExistedUserRegister() throws Exception {
+    void testAbnormalUserRegister() throws Exception {
+        // test missing credentials
+        JSONObject requestBody = new JSONObject()
+                .put("username", testUsername);
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/user/register")
+                        .contentType("application/json")
+                        .content(requestBody.toString()))
+                .andDo(print())
+                .andReturn();
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
+
+        // test exist username request
         registerTestUser();
-        MvcResult result = registerTestUser();
+        result = registerTestUser();
         assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
         userRepository.delete(userRepository.findByUsername(testUsername).get());
     }

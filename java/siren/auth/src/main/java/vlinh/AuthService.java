@@ -28,10 +28,17 @@ public class AuthService {
         HttpHeaders responseHeader = new HttpHeaders();
         responseHeader.set("Content-Type", "application/json");
 
+        // check null value
+        if (user.getUsername() == null || user.getPassword() == null) {
+            JSONObject responseBody = new JSONObject()
+                    .put("message","Missing credentials")
+                    .put("success", false);
+            return new ResponseEntity<>(responseBody.toString(), responseHeader, HttpStatus.BAD_REQUEST);
+        }
+
         // check if username already exist
         Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
         if (optionalUser.isPresent()) {
-            System.out.println("Username exist section");
             JSONObject responseBody = new JSONObject()
                     .put("message","Username already exist")
                     .put("success", false);
